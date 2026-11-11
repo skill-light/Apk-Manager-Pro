@@ -6,6 +6,10 @@ A high-performance Android reverse engineering, APK modification, and signing ID
 
 ---
 
+![Apk Manager Pro Preview](demo.png)
+
+---
+
 ## Overview
 
 Android reverse engineering on desktop environments has historically been constrained by tools designed either strictly for read-only static analysis or heavyweight full-decompilation pipelines:
@@ -33,11 +37,45 @@ The following table provides an architectural and feature comparison between **A
 | **Multi-File Tabbed Workspace** | **Multi-tab editor** with in-memory caching of bytecode, Java preview, cursor positions, and scroll offsets | Tabbed document interface for classes and resources | Basic MDI / Tabbed editor |
 | **DEX / Class Navigation** | **Dedicated DEX Explorer**: Combined multi-DEX class tree, live search filter, and **popout floating window** | Package tree for all DEX files | Standard filesystem tree of extracted project folder |
 | **DEX String Pool Inspection** | **Full String Pool Analyzer**: Lists all strings across all DEX files with one-click redirection to Smali | Text search and basic string dumping | Basic search within extracted text files |
+| **Setup & Dependencies** | **100% Plug-and-Play**: Download, extract, and run. Zero external setup required | Download and run JAR / EXE | Tedious manual setup: requires manually installing and configuring paths for Android SDK, Apktool, and keystores |
 | **Signing & Alignment Tooling** | **Integrated Uber Apk Signer & Zipalign**: v1/v2/v3 schemes, debug/custom keys, automatic `.idsig` cleanup | **None** | Basic signer (requires external `jarsigner`/`apksigner` setup) |
 | **APK & Security Inspector** | **Comprehensive APK metadata panel**: Package info, SDK levels, components, and deep X.509 cert analysis | Reads APK certificates and manifest headers | Minimal APK info display |
 | **Ad & Tracker Detection** | **Multi-threaded scanner** detecting AdMob, Unity, AppLovin, IronSource, Mintegral, Firebase, etc. | **None** | **None** |
 | **Persistent Standalone Projects** | **Yes**: Create persistent projects on disk with non-destructive working environments and recent project history | Saves `.jadx` project states (mappings, comments, bookmarks) | Creates folder projects from Apktool extractions |
 | **Disk & Memory Footprint** | **Zero unnecessary disk writes** in quick mod mode; low RAM footprint | High memory usage for large multi-DEX APKs due to JVM heap | High disk usage due to full asset and resource extraction |
+
+---
+
+## Two Distinct Workflows: VFS vs. Project Mode
+
+Apk Manager Pro provides two dedicated workflows tailored to different reverse engineering scenarios:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                          Apk Manager Pro                               │
+└───────────────────┬────────────────────────────────┬───────────────────┘
+                    │                                │
+       [Quick Open APK File (Ctrl+O)]    [Project Mode (Ctrl+Shift+N/O)]
+                    │                                │
+                    ▼                                ▼
+       Virtual File System (VFS)          Full Decompiled Environment
+  - Opens APK directly as ZIP archive   - Persistent folder on disk
+  - Zero disk extraction for assets     - Decompiles Smali, res, assets
+  - Files read from memory              - Persistent project.json & recents
+  - Save directly updates archive file  - Recompiles via Apktool + Signer
+```
+
+### 1. Quick Open APK File (`Ctrl+O`) — Virtual File System (VFS)
+- **When to use**: Quick edits, asset inspection, instant manifest checking, and in-place APK modification without disk clutter.
+- **How it works**: Mounts the APK file directly in memory via an in-place Virtual File System (`QZipReader` / `QZipWriter`).
+- **Zero Disk Extraction**: Internal assets, layouts, scripts, and libraries are read directly from memory into the editor without extracting files to disk.
+- **In-Place Save**: Pressing `Ctrl+S` writes changes directly back into the APK archive container in-place, mirroring the rapid workflow of MT Manager.
+
+### 2. Standalone Project Mode (`Ctrl+Shift+N` / `Ctrl+Shift+O`) — Persistent Environment
+- **When to use**: Deep, multi-file modding projects, extensive Smali bytecode rewrites, resource renaming, or long-term app maintenance.
+- **How it works**: Creates a standalone workspace folder on disk containing disassembled Smali bytecode, decoded XML resources, assets, and project descriptor (`apkmanager_project.json`).
+- **Non-Destructive**: Project files are persistent on disk and never deleted on exit.
+- **Recent Projects**: Quickly reopen existing projects from the start screen or File menu with automatic on-disk existence validation.
 
 ---
 
@@ -54,6 +92,9 @@ Unlike standard file trees that mirror disk folder structures, Apk Manager Pro f
 
 ### 4. Zero-Residual Signing Pipeline
 Other modding suites often leave stray `.idsig`, `.tmp`, or intermediate build artifacts cluttering your mod directories. Apk Manager Pro embeds an automated signing engine with verification, zipalign, and automatic residual cleanup.
+
+### 5. True Plug-and-Play (Zero Configuration Hell)
+Unlike **APK Studio**, which forces users through a tedious initial setup process—demanding manual installation and path configuration for the Android SDK, Build-Tools, `aapt`, `zipalign`, external `apktool.jar`, and Java keystores before it can even open an APK—**Apk Manager Pro** is **100% plug-and-play**. All required decompiler binaries, disassemblers, signers, and analyzers are bundled directly with the application. Simply download, extract, and start modding immediately with zero setup required.
 
 ---
 
