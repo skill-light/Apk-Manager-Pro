@@ -1,4 +1,4 @@
-# Apk Manager Pro (v1.0.0-beta)
+# Apk Manager Pro (v1.0.1)
 
 A high-performance Android reverse engineering, APK modification, and signing IDE for Windows, combining the rapid workflow of MT Manager with the modern workspace ergonomics of VS Code.
 
@@ -17,7 +17,7 @@ Android reverse engineering on desktop environments has historically been constr
 - **[APK Studio](https://github.com/vaibhavpandeyvpz/apkstudio)**: A cross-platform IDE that wraps Apktool, `baksmali`, and Android SDK tools. While functional, it mandates a full project decompile/recompile cycle—unpacking every DEX and resource into tens of thousands of loose disk files. This incurs heavy disk I/O, consumes gigabytes of storage, and frequently fails on obfuscated, protected, or multi-DEX APKs.
 - **MT Manager**: Mobile reverse engineers prefer MT Manager due to its instantaneous in-place ZIP/DEX modifications and dual-pane workflow, but using it on Windows requires running heavy Android emulators or virtualization layers.
 
-**Apk Manager Pro (v1.0.0-beta)** bridges this divide. Built natively in C++17 with Qt 6, it delivers an in-memory Virtual File System (VFS) for instant APK exploration and modification, combined with a synchronized dual-pane Smali/Java editor, a standalone DEX Explorer, built-in multi-scheme signing (v1/v2/v3), and a modern VS Code dark environment.
+**Apk Manager Pro (v1.0.1)** bridges this divide. Built natively in C++17 with Qt 6, it delivers an in-memory Virtual File System (VFS) for instant APK exploration and modification, combined with a synchronized dual-pane Smali/Java editor, a standalone DEX Explorer, built-in multi-scheme signing (v1/v2/v3), and a modern VS Code dark environment.
 
 ---
 
@@ -25,7 +25,7 @@ Android reverse engineering on desktop environments has historically been constr
 
 The following table provides an architectural and feature comparison between **Apk Manager Pro**, **JADX-GUI ([skylot/jadx](https://github.com/skylot/jadx))**, and **APK Studio ([vaibhavpandeyvpz/apkstudio](https://github.com/vaibhavpandeyvpz/apkstudio))**:
 
-| Feature / Dimension | Apk Manager Pro (v1.0.0-beta) | JADX-GUI (`skylot/jadx`) | APK Studio (`vaibhavpandeyvpz/apkstudio`) |
+| Feature / Dimension | Apk Manager Pro (v1.0.1) | JADX-GUI (`skylot/jadx`) | APK Studio (`vaibhavpandeyvpz/apkstudio`) |
 |---|---|---|---|
 | **Core Architecture & Philosophy** | **Full Modding, Editing & Signing IDE** with hybrid in-place VFS and standalone projects | **Read-Only Static Analysis & Decompiler** | **Wrapper IDE for Full Apktool Extraction** |
 | **Language & Engine** | Native **C++17 & Qt 6** (low memory, instant startup) | **Java / Kotlin** on JVM (Swing UI, high heap consumption) | **C++ & Qt** (front-end CLI wrapper) |
@@ -98,13 +98,14 @@ Unlike **APK Studio**, which forces users through a tedious initial setup proces
 
 ---
 
-## Core Features in v1.0.0-beta
+## Core Features in v1.0.1
 
 - **Standalone Project Environments**: Create and manage persistent modding projects with decompiled Smali, resources, manifests, and internal APK copies that persist across sessions.
 - **Recent Projects on Disk**: Instant access to recently opened projects with automatic on-disk existence validation.
 - **Virtual File System (VFS)**: Inspect, extract, and replace files directly inside APK archives without full decompression.
 - **Smali Code Suggestions**: Non-AI, deterministic autocompletion for Dalvik opcodes (`invoke-virtual`, `const-string`, etc.), directives (`.method`, `.registers`, etc.), Android type descriptors (`Landroid/content/Context;`), registers (`v0-v15`, `p0-p7`), and dynamic in-file jump labels.
 - **DEX String Pool Inspection**: View all strings across all DEX containers with quick filter and double-click Smali redirection.
+- **Automatic GitHub Release Updater**: Built-in non-blocking update checker that automatically queries GitHub releases on startup, displays formatted release notes, and offers one-click downloads.
 - **Popout DEX Explorer**: Toggle between docked sidebar and standalone window mode to maximize editor screen real estate.
 - **Live Apktool Decompilation Modal**: Active progress dialog with real-time log streaming during project generation.
 - **Integrated Multi-Scheme APK Signer**: Complete support for Android v1, v2, and v3 signature schemes with 4-byte zipalign verification.
@@ -122,9 +123,9 @@ Unlike **APK Studio**, which forces users through a tedious initial setup proces
 
 ## Distribution & Releases
 
-Apk Manager Pro **v1.0.0-beta** is packaged and distributed as precompiled standalone Windows 64-bit binaries.
+Apk Manager Pro **v1.0.1** is packaged and distributed as precompiled standalone Windows 64-bit binaries.
 
-1. Download the release package (`ApkManagerPro-v1.0.0-beta-win64.zip`) from the GitHub **Releases** page.
+1. Download the release package (`ApkManagerPro-v1.0.1-win64.zip`) from the GitHub **Releases** page.
 2. Extract the archive to your chosen directory.
 3. Run `ApkManagerPro.exe`.
 
@@ -132,4 +133,17 @@ Apk Manager Pro **v1.0.0-beta** is packaged and distributed as precompiled stand
 
 ## Feedback & Contributions
 
-As Apk Manager Pro is currently in **v1.0.0-beta**, I will be deeply grateful for your feedback, feature suggestions, and bug reports. Please feel free to open an issue or share your ideas on GitHub to help make this tool even better!
+As Apk Manager Pro is currently in **v1.0.1**, I will be deeply grateful for your feedback, feature suggestions, and bug reports. Please feel free to open an issue or share your ideas on GitHub to help make this tool even better!
+
+---
+
+## About Apk Manager Pro
+
+**Apk Manager Pro** is developed by **Skill Light** as a high-performance, native Windows reverse engineering environment. It is designed to offer the rapid, non-destructive workflow popularized by MT Manager with desktop-grade VS Code ergonomics, multi-DEX navigation, on-demand JADX decompilation, and multi-scheme APK signing.
+
+- **GitHub Repository:** [https://github.com/skill-light/Apk-Manager-Pro](https://github.com/skill-light/Apk-Manager-Pro)
+- **Author & Maintainer:** Skill Light
+- **Current Release:** v1.0.1 (Production)
+- **Built with:** Native C++17, Qt 6.11.3 (MSVC 2022 64-bit)
+- **Toolchain:** Apktool v2.10.0, JADX v1.5.0, Uber-APK-Signer v1.3.0
+
